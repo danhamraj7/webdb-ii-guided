@@ -13,43 +13,43 @@ const db = require("../data/dbconfig");
 // });
 
 router.get("/", (req, res) => {
-  db("fruits")
-    .then((fruits) => {
-      res.json(fruits);
+  db("veggies")
+    .then((veggies) => {
+      res.json(veggies);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to retrieve fruits" });
+      res.status(500).json({ message: "Failed to retrieve veggies" });
     });
 });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
-  db("fruits")
+  db("veggies")
     .where({ id })
     .first()
-    .then((fruit) => {
-      res.json(fruit);
+    .then((veggie) => {
+      res.json(veggie);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to retrieve fruit" });
+      res.status(500).json({ message: "Failed to retrieve vegetable" });
     });
 });
 
 router.post("/", (req, res) => {
-  const fruitData = req.body;
-  db("fruits")
-    .insert(fruitData)
+  const veggieData = req.body;
+  db("veggies")
+    .insert(veggieData)
     .then((ids) => {
-      db("fruits")
+      db("veggies")
         .where({ id: ids[0] })
-        .then((newFruitEntry) => {
-          res.status(201).json(newFruitEntry);
+        .then((newveggieEntry) => {
+          res.status(201).json(newveggieEntry);
         });
     })
     .catch((err) => {
       console.log("POST error", err);
-      res.status(500).json({ message: "Failed to store data" });
+      res.status(500).json({ message: "Failed to store veggie data" });
     });
 });
 
